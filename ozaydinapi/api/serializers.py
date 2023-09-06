@@ -1,54 +1,34 @@
 from rest_framework import serializers
-from ozaydinapi.models import Cars, Yolcular,Yolculuk,YolculuknYolcular, Ekstra
+from ozaydinapi.models import NeredenNereye, Cars, Ekstra, YolcuBilgi, YolcuLast
+
+class NeredenNereyeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = NeredenNereye
+        fields = '__all__'
 
 class CarsSerializer(serializers.ModelSerializer):
+    YolculukFiyati = serializers.SerializerMethodField()
     class Meta:
         model = Cars
-        fields = '__all__'
+        fields = ['Cartitle','Cartype','Carfiyat','Carkm','YolculukFiyati']
 
-class YolcularSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Yolcular
-        fields = '__all__'
+    def get_YolculukFiyati(self, obj):
 
+        YolculukFiyati = float(obj.Carfiyat * obj.Carkm)
+        return round(YolculukFiyati) 
 
 class EkstraSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ekstra
         fields = '__all__'
 
-class YolculukSerializer(serializers.ModelSerializer):
-    #data = serializers.SerializerMethodField()
+class YolcubilgiSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Yolculuk
-        fields = ['cars','yolcusayi','kac_km','nereden','nereye','ekstra'] #data
-    def get_data(self, obj):
-         data = {}
-"""         data["fiyat/euro"] = (obj.cars.carfiyat * (obj.kac_km * obj.yolcusayi)) / 30
-         data["fiyat/dolar"] = (obj.cars.carfiyat * (obj.kac_km * obj.yolcusayi)) / 27 
-         data["fiyat/sterlin"] = (obj.cars.carfiyat * (obj.kac_km * obj.yolcusayi)) / 25 
-         data["fiyat/TL"] = (obj.cars.carfiyat * (obj.kac_km * obj.yolcusayi)) 
-        
-         data["fiyat/euro/ekstra"] = (obj.cars.carfiyat * (obj.kac_km * obj.yolcusayi) + ((obj.ekstra.uckopru * 50) + (obj.ekstra.bebekkoltuk * 100 ) +(obj.ekstra.yuksekkoltuk * 150) + (obj.ekstra.onesaat * 50  )   )) / 30 
-         data["fiyat/dolar/ekstra"] = (obj.cars.carfiyat * (obj.kac_km * obj.yolcusayi) + ((obj.ekstra.uckopru * 50) + (obj.ekstra.bebekkoltuk * 100 ) +(obj.ekstra.yuksekkoltuk * 150) + (obj.ekstra.onesaat * 50  )   )) / 27 
-         data["fiyat/sterlin/ekstra"] = (obj.cars.carfiyat * (obj.kac_km * obj.yolcusayi) + ((obj.ekstra.uckopru * 50) + (obj.ekstra.bebekkoltuk * 100 ) +(obj.ekstra.yuksekkoltuk * 150) + (obj.ekstra.onesaat * 50  )   )) / 25
-         data["fiyat/TL/ekstra"] = (obj.cars.carfiyat * (obj.kac_km * obj.yolcusayi) + ((obj.ekstra.uckopru * 50) + (obj.ekstra.bebekkoltuk * 100 ) +(obj.ekstra.yuksekkoltuk * 150) + (obj.ekstra.onesaat * 50  )   ))
-
-         
- 
-
-
-         
-         
-         return data
-    """
-
-
-
-class YolculuknYolcularSerializer(serializers.ModelSerializer):
-    yolcular = YolcularSerializer()
-    yolculuk = YolculukSerializer()
-    class Meta:
-        model = YolculuknYolcular
+        model = YolcuBilgi
         fields = '__all__'
-    
+        
+class YolcuLastSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = YolcuLast
+        fields = '__all__'

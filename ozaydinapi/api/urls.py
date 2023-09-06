@@ -1,23 +1,25 @@
 from django.urls import path, include
 # lookup field vermezsek auto pk olarak geliyo 
-from .views import CarCreate,  YolcularAllview, YolculukAllView, CreateYolnYolcu, EkstraApiView
-
+from .views import NeredenNereyeApiView, CarCreate, YolcuLasApiView,UserList,EkstraApiview, YolcuBilgiApiView
 app_name = 'cars'
 urlpatterns = [
-    path('tr-booking/',CarCreate.as_view(),name="carcreate"),
-    path('tr-booking/<int:pk>/',CarCreate.as_view(),name="carcreate1"),
+    path('trbooking/',NeredenNereyeApiView.as_view(),name="neredennereye"),
+    path('trbooking2/',EkstraApiview.as_view(),name="ekstra1"),
+    path('trbooking3/',YolcuBilgiApiView.as_view(),name="ekstra2"),
+    path('trbooking4/',YolcuLasApiView.as_view(),name="ekstra3"),
+    path('trbooking5/',UserList.as_view(),name="ekstra4"),
 
-    path('tr-booking-3/',YolcularAllview.as_view(),name="yolcular"),
-    path('tr-booking-3/<int:pk>/',YolcularAllview.as_view(),name="yolcular1"),
 
-    path('yolculuk/',YolculukAllView.as_view(),name="yolculuk"),
-    path('yolculuk/<int:pk>/',YolculukAllView.as_view(),name="yolculuk1"),
 
-    path('yolculuknyolcular/',CreateYolnYolcu.as_view(),name="createyny"),
-    path('yolculuknyolcular//<int:pk>/',CreateYolnYolcu.as_view(),name="createyny1"),
 
-    path('tr-booking-2/',EkstraApiView.as_view(),name="ekstra"),
-    path('tr-booking-2/<int:pk>/',EkstraApiView.as_view(),name="ekstra1")
+    path('carcreate/',CarCreate.as_view(),name="carcreate"),
+    path('trbooking/<int:pk>/',NeredenNereyeApiView.as_view(),name="neredennereye"),
+
+
+
+
+
+
 
 
 
@@ -26,3 +28,7 @@ urlpatterns = [
 
 
 ]
+  
+    
+
+

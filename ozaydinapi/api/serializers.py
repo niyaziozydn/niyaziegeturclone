@@ -18,13 +18,13 @@ class EkstraSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class YolculukSerializer(serializers.ModelSerializer):
-    data = serializers.SerializerMethodField()
+    #data = serializers.SerializerMethodField()
     class Meta:
         model = Yolculuk
-        fields = ['cars','yolcusayi','kac_km','nereden','nereye','data']
+        fields = ['cars','yolcusayi','kac_km','nereden','nereye','ekstra'] #data
     def get_data(self, obj):
          data = {}
-         data["fiyat/euro"] = (obj.cars.carfiyat * (obj.kac_km * obj.yolcusayi)) / 30
+"""         data["fiyat/euro"] = (obj.cars.carfiyat * (obj.kac_km * obj.yolcusayi)) / 30
          data["fiyat/dolar"] = (obj.cars.carfiyat * (obj.kac_km * obj.yolcusayi)) / 27 
          data["fiyat/sterlin"] = (obj.cars.carfiyat * (obj.kac_km * obj.yolcusayi)) / 25 
          data["fiyat/TL"] = (obj.cars.carfiyat * (obj.kac_km * obj.yolcusayi)) 
@@ -41,7 +41,7 @@ class YolculukSerializer(serializers.ModelSerializer):
          
          
          return data
-    
+    """
 
 
 

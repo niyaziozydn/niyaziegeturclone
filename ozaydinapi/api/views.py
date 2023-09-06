@@ -53,9 +53,24 @@ class CarCreate(APIView):
 class YolcularAllview(APIView):
     def get(self, request, pk=None):  # Add 'pk=None' to the get method
         if pk is not None:
-            book = Yolcular.objects.get(pk=pk)
-            serializer = YolcularSerializer(book)
-            return Response(serializer.data)
+            book = Yolculuk.objects.get(pk=pk)
+            data =  {
+                "Nereden": book.nereden,
+                "Nereye": book.nereye,
+                "cartitle": book.cars.cartitle,
+                "yolcusayi": book.yolcusayi,
+                "fiyat": ((book.cars.carfiyat * (book.kac_km * book.yolcusayi)) + (book.ekstra.onesaat * 50 )),
+                "dolar": ((book.cars.carfiyat * (book.kac_km * book.yolcusayi)) +(book.ekstra.onesaat * 50 )) / 25,
+                "euro": ((book.cars.carfiyat * (book.kac_km * book.yolcusayi))+(book.ekstra.onesaat * 50 )) / 30,
+                "sterlin": ((book.cars.carfiyat * (book.kac_km * book.yolcusayi))+ (book.ekstra.onesaat * 50 )) / 35
+
+
+            }
+            serializer = YolculukSerializer(book)
+            return Response({
+                "detaylar":serializer.data,
+                "fiyaticerik":data,
+                })
         else:
             books = Yolcular.objects.all()
             serializer = YolcularSerializer(books, many=True)
@@ -94,10 +109,25 @@ class YolculukAllView(APIView):
     def get(self, request, pk=None):  # Add 'pk=None' to the get method
         if pk is not None:
             book = Yolculuk.objects.get(pk=pk)
+            data =  {
+                "Nereden": book.nereden,
+                "Nereye": book.nereye,
+                "cartitle": book.cars.cartitle,
+                "yolcusayi": book.yolcusayi,
+                "fiyat": ((book.cars.carfiyat * (book.kac_km * book.yolcusayi)) + (book.ekstra.onesaat * 50 )),
+                "dolar": ((book.cars.carfiyat * (book.kac_km * book.yolcusayi)) +(book.ekstra.onesaat * 50 )) / 25,
+                "euro": ((book.cars.carfiyat * (book.kac_km * book.yolcusayi))+(book.ekstra.onesaat * 50 )) / 30,
+                "sterlin": ((book.cars.carfiyat * (book.kac_km * book.yolcusayi))+ (book.ekstra.onesaat * 50 )) / 35
+
+
+            }
             serializer = YolculukSerializer(book)
-            return Response(serializer.data)
+            return Response({
+                "detaylar":serializer.data,
+                "fiyaticerik":data,
+                })
         else:
-            books = Yolculuk.objects.all()
+            books = Yolculuk.objects.get(pk=pk)
             serializer = YolculukSerializer(books, many=True)
             return Response(serializer.data)
 
@@ -185,12 +215,27 @@ class EkstraApiView(APIView):
 
     def get(self, request, pk=None):  # Add 'pk=None' to the get method
         if pk is not None:
-            book = Ekstra.objects.get(pk=pk)
-            serializer = EkstraSerializer(book)
-            return Response(serializer.data)
+            book = Yolculuk.objects.get(pk=pk)
+            data =  {
+                "Nereden": book.nereden,
+                "Nereye": book.nereye,
+                "cartitle": book.cars.cartitle,
+                "yolcusayi": book.yolcusayi,
+                "fiyat": book.cars.carfiyat * (book.kac_km * book.yolcusayi),
+                "dolar": (book.cars.carfiyat * (book.kac_km * book.yolcusayi)) / 25,
+                "euro": (book.cars.carfiyat * (book.kac_km * book.yolcusayi)) / 30,
+                "sterlin": (book.cars.carfiyat * (book.kac_km * book.yolcusayi)) / 35
+
+
+            }
+            serializer = YolculukSerializer(book)
+            return Response({
+                "detaylar":serializer.data,
+                "fiyaticerik":data,
+                })
         else:
-            books = Ekstra.objects.all()
-            serializer = EkstraSerializer(books, many=True)
+            books = Yolculuk.objects.all()
+            serializer = YolculukSerializer(books, many=True)
             return Response(serializer.data)
 
     def post(self, request):

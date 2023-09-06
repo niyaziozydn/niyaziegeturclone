@@ -30,6 +30,7 @@ class Yolculuk(models.Model):
     nereye = models.CharField(max_length=200,blank=True,null=True)
 
 class Yolcular(models.Model):
+    yolculuk = models.ForeignKey(Yolculuk,on_delete=models.SET_NULL,null=True)
     isim = models.CharField(max_length=200,blank=True,null=True)
     soy_isim = models.CharField(max_length=200,blank=True,null=True)
     yas = models.IntegerField(blank=True,null=True)
